@@ -9,6 +9,8 @@ body {
   font-family: "Roboto", "sans-serif";
 }
 
+/* HEADER */
+
 .header {
   background-color: #1F2937;
 
@@ -45,4 +47,41 @@ body {
 
 .header a:hover {
   color: #F9FAF8;
+}
+
+/* HERO */
+
+.hero {
+  background-color: #1F2937;
+
+  padding: 100px 200px;
+  
+  display: flex;
+  gap: 15px;
+
+  justify-content: space-between;
+}
+
+.hero .left h1 {
+  font-size: 48px;
+  color: #F9FAF8;
+  font-weight: 900;
+}
+
+.hero .left p {
+  font-size: 18px;
+  color: #E5E7EB;
+}
+
+.hero .left button {
+  background-color: #3882F6;
+  color: #E5E7EB;
+
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  padding: 8px 35px;
+
+  border: 0;
+  border-radius: 9px;
 }
