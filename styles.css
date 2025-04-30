@@ -119,3 +119,36 @@ body {
   width: 100%;
   height: 150px;
 }
+
+/* QUOTE */
+
+.quote {
+  background-color: #E5E7EB;
+
+  display: flex;
+  justify-content: center;
+  padding: 100px;
+}
+
+.quote-container {
+  width: 800px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quote .text {
+  font-size: 36px;
+  font-style: italic;
+  font-weight: lighter;
+  color: #1F2937;
+}
+
+.quote .author {
+  align-self: flex-end;
+  padding-right: 30px;
+
+  font-size: 20px;
+  font-weight: bold;
+}
