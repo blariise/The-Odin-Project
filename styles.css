@@ -199,3 +199,14 @@ body {
   text-align: center;
   padding: 5px 35px;
 }
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 50px;
+
+  background-color: #1F2937;
+  color: #E5E7EB;
+}
