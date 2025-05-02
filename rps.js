@@ -1,5 +1,12 @@
 let humanScore = 0;
 let computerScore = 0;
+const results_div = document.querySelector(".results");
+
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    playRound(button.id, getComputerChoice());
+  });
+});
 
 function getComputerChoice() {
   let choice = Math.floor(Math.random() * 3);
@@ -15,16 +22,8 @@ function getComputerChoice() {
   return null;
 }
 
-function getHumanChoice() {
-  return prompt("Choose rock, paper or scissors!").toLowerCase();
-}
-
 function playRound(humanChoice, computerChoice) {
-  if (humanChoice === computerChoice) {
-    console.log("Tie");
-    return;
-  }
-
+  const isTie = humanChoice === computerChoice;
   let isHumanWinner = false;
 
   if (humanChoice === "rock" && computerChoice === "scissors") {
@@ -37,27 +36,22 @@ function playRound(humanChoice, computerChoice) {
     isHumanWinner = true;
   }
   
-  let message = null;
-
-  if (isHumanWinner) {
-    ++humanScore;
-    message = `You win! ${humanChoice} beats ${computerChoice}`;
+  let result = null;
+  if (isTie) {
+    result = "Tie";
   } else {
-    ++computerScore;
-    message = `You lose! ${computerChoice} beats ${humanChoice}`;
+    if (isHumanWinner) {
+      ++humanScore;
+      result = `You win! ${humanChoice} beats ${computerChoice}`;
+    } else {
+      ++computerScore;
+      result = `You lose! ${computerChoice} beats ${humanChoice}`;
+    }
   }
-  console.log(message);
+
+  let p = document.createElement("p");
+  p.appendChild(document.createTextNode(result));
+  results_div.appendChild(p);
+  console.log(result);
 }
 
-function playGame() {
-  for (let i = 0; i < 5; ++i) {
-    playRound(getHumanChoice(), getComputerChoice());
-  }
-  if (humanScore > computerScore) {
-    console.log("Congratulation, You won!");
-  } else if ( humanScore < computerScore) {
-    console.log("Unlucky, You lost!");
-  } else {
-    console.log("Its tie");
-  }
-}
