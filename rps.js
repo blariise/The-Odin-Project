@@ -2,6 +2,7 @@ let humanScore = 0;
 let computerScore = 0;
 const results_div = document.querySelector(".results");
 const buttons = document.querySelectorAll("button");
+const score = document.querySelector(".scores");
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -49,10 +50,17 @@ function playRound(humanChoice, computerChoice) {
       result = `You lose! ${computerChoice} beats ${humanChoice}`;
     }
   }
-
+  score.textContent = `Player: ${humanScore} Computer ${computerScore}`;
   let p = document.createElement("p");
   p.appendChild(document.createTextNode(result));
   results_div.appendChild(p);
   console.log(result);
+
+  if (humanScore === 5) {
+    alert("Congratz, You won!");
+  }
+  if (computerScore === 5) {
+    alert("Unlucky, You lost!");
+  }
 }
 
