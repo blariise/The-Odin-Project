@@ -1,6 +1,7 @@
 let humanScore = 0;
 let computerScore = 0;
 const results_div = document.querySelector(".results");
+const buttons = document.querySelectorAll("button");
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
