@@ -19,10 +19,10 @@ function createGrid() {
   squares.forEach((square) => {
     square.addEventListener("mouseover", () => {
       if (isMouseDown) {
+        let opacity = getComputedStyle(square).getPropertyValue("opacity");
+        square.style["opacity"] = Number(opacity) + 0.1;
         let color = `#${randomizeColor()}`;
-        console.log(color);
         square.style["background-color"] = color;
-        console.log(square.id);
       }
     });
   });
