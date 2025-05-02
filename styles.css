@@ -8,6 +8,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #141421;
 }
 
 .btn {
@@ -16,6 +17,7 @@ body {
 }
 
 .container {
+  background-color: #FFFFFF;
   border: 1px solid black;
   width: 640px;
   height: 640px;

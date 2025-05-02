@@ -4,6 +4,14 @@ let gridSize = 16;
 const CONTAINER_SIZE = 640;
 const button = document.querySelector(".btn");
 
+document.addEventListener("mousedown", (e) => {
+  isMouseDown = true;
+});
+
+document.addEventListener("mouseup", () => {
+  isMouseDown = false;
+});
+
 function createGrid() {
   let squareSize = CONTAINER_SIZE / gridSize;
   for (let i = 0; i < gridSize * gridSize; ++i) { 
@@ -54,13 +62,4 @@ button.addEventListener("click", () => {
   clearGrid();
   createGrid();
 });
-
-document.addEventListener("mousedown", (e) => {
-  isMouseDown = true;
-});
-
-document.addEventListener("mouseup", () => {
-  isMouseDown = false;
-});
-randomizeColor();
 
