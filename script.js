@@ -19,7 +19,9 @@ function createGrid() {
   squares.forEach((square) => {
     square.addEventListener("mouseover", () => {
       if (isMouseDown) {
-        square.style["background-color"] = "blue";
+        let color = `#${randomizeColor()}`;
+        console.log(color);
+        square.style["background-color"] = color;
         console.log(square.id);
       }
     });
@@ -35,6 +37,13 @@ function clearGrid() {
   });
 }
 
+function randomizeColor() {
+  let color = "";
+  for (let i = 0; i < 6; ++i) {
+    color += Math.floor(Math.random() * 15).toString(16);
+  }
+  return color;
+}
 
 button.addEventListener("click", () => {
   let size = prompt("Change grid size, enter side size: ", 16);
@@ -53,5 +62,5 @@ document.addEventListener("mousedown", (e) => {
 document.addEventListener("mouseup", () => {
   isMouseDown = false;
 });
-
+randomizeColor();
 
