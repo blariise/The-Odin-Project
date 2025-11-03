@@ -1,4 +1,4 @@
-export default function createDayDOM() {
+export default function createCardDOM() {
   const cardDiv = document.createElement("div");
   cardDiv.className = "day-card";
 

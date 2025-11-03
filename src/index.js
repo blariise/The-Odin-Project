@@ -1,6 +1,6 @@
 import "./styles.css";
 import fetchWeather from "./weather.js";
-import createDayDOM from "./dom.js";
+import createCardDOM from "./dom.js";
 
 (async () => {
   const search = document.querySelector(".search input");
@@ -9,15 +9,17 @@ import createDayDOM from "./dom.js";
     if (event.key == "Enter" && search.value !== "") {
       weatherData = await fetchWeather(search.value);
       search.value = "";
+      renderCardDOM();
       renderWeatherData(weatherData);
     }
   });
 })();
 
 function renderWeatherData(weatherData) {
-  const xd = createDayDOM();
-  const c = document.querySelector(".weather-container");
-  c.appendChild(xd);
-  console.log(weatherData);
+}
+
+function renderCardDOM() {
+  const weatherContainer = document.querySelector(".weather-container");
+  weatherContainer.appendChild(createCardDOM());
 }
 
