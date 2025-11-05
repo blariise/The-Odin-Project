@@ -47,27 +47,34 @@ function createInfoDOM() {
   const infoDiv = document.createElement("div");
   infoDiv.className = "info";
 
-  const values = [
-    "relative-humidity",
-    "cloud-cover",
+  const weatherDetails = [
+    "humidity",
+    "cloudcover",
     "visibility",
-    "precipitation",
-    "precipitation-chance",
-    "precipitation-type",
-    "snowfall",
-    "snow-depth",
-    "wind-speed",
-    "wind-gust",
-    "wind-direction",
-    "solar-radiation",
-    "solar-energy",
-    "uv-index"
+    "precip",
+    "precipprob",
+    "preciptype",
+    "snow",
+    "snowdepth",
+    "windspeed",
+    "windgust",
+    "winddir",
+    "solarradiation",
+    "solarenergy",
+    "uvindex"
   ];
 
-  values.forEach((value) => {
-    const element = document.createElement("div");
-    element.className = `info-value ${value}`;
-    infoDiv.appendChild(element);
+  weatherDetails.forEach((weatherDetail) => {
+    const mainElement = document.createElement("div");
+    mainElement.className = "info-value";
+    mainElement.dataset.key = weatherDetail;
+    const key = document.createElement("div");
+    const value = document.createElement("div");
+    key.className = "title";
+    value.className = "value";
+    mainElement.appendChild(key);
+    mainElement.appendChild(value);
+    infoDiv.appendChild(mainElement);
   });
   return infoDiv;
 }

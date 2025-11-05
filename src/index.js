@@ -36,35 +36,54 @@ function renderUpperCard(weatherData, place) {
 }
 
 function renderInfo(weatherData) {
-  const relativeHumidity = document.querySelector(".relative-humidity");
-  const cloudCover = document.querySelector(".cloud-cover");
-  const visibility = document.querySelector(".visibility");
-  const precipitation = document.querySelector(".precipitation");
-  const precipitationChance = document.querySelector(".precipitation-chance");
-  const precipitationType = document.querySelector(".precipitation-type");
-  const snowfall = document.querySelector(".snowfall");
-  const snowDepth = document.querySelector(".snow-depth");
-  const windSpeed = document.querySelector(".wind-speed");
-  const windGust = document.querySelector(".wind-gust");
-  const windDirection = document.querySelector(".wind-direction");
-  const solarRadiation = document.querySelector(".solar-radiation");
-  const solarEnergy = document.querySelector(".solar-energy");
-  const uvIndex = document.querySelector(".uv-index");
+  const elements = document.querySelectorAll(".info-value");
+  const titles = [
+    "Relative humidity",
+    "Cloud cover",
+    "Visibility",
+    "Precipitation",
+    "Precipitation chance",
+    "Precipitation type",
+    "Snowfall",
+    "Snow depth",
+    "Wind speed",
+    "Wind gust",
+    "Wind direction",
+    "Solar radiation",
+    "Solar energy",
+    "UV index"
+  ];
+  const units = [
+    "%",
+    "%",
+    "km",
+    "mm",
+    "%",
+    "",
+    "cm",
+    "cm",
+    "km/h",
+    "km/h",
+    "°",
+    "W/m²",
+    "W/m²",
+    ""
+  ];
 
-  relativeHumidity.innerText = `Relative humidity: ${weatherData.humidity}`;
-  cloudCover.innerText = `Cloud cover: ${weatherData.cloudcover}`;
-  visibility.innerText = `Visibility: ${weatherData.visibility}`;
-  precipitation.innerText = `Precipitation: ${weatherData.precip}`;
-  precipitationChance.innerText = `Precipitation chance: ${weatherData.precipprob}`;
-  precipitationType.innerText = `Precipitation type: ${weatherData.preciptype}`;
-  snowfall.innerText = `Snowfall: ${weatherData.snow}`;
-  snowDepth.innerText = `Snow depth: ${weatherData.snowdepth}`;
-  windSpeed.innerText = `Wind speed: ${weatherData.windspeed}`;
-  windGust.innerText = `Wind gust: ${weatherData.windgust}`;
-  windDirection.innerText = `Wind direction: ${weatherData.winddir}`;
-  solarRadiation.innerText = `Solar radiation: ${weatherData.solarradiation}`;
-  solarEnergy.innerText = `Solar energy: ${weatherData.solarenergy}`;
-  uvIndex.innerText = `UV index: ${weatherData.uvindex}`;
+  let index = 0;
+  elements.forEach((element) => {
+    const titleDiv = element.querySelector(".title");
+    const valueDiv = element.querySelector(".value");
+    titleDiv.innerText = titles[index];
+    const value = weatherData[element.dataset.key];
+    console.log(value);
+    if (value === null) {
+      valueDiv.innerText = "-";
+    } else {
+      valueDiv.innerText = `${value} ${units[index]}`;
+    }
+    ++index;
+  });
 }
 
 function renderWeatherData(weatherData, place) {
@@ -80,7 +99,6 @@ async function dynamicImport(weatherStatus, extension) {
 async function setUpperCardBackgroundGif(weatherStatus) {
   const upperCard = document.querySelector(".upper-card");
   const background = await dynamicImport(weatherStatus, "gif");
-  console.log(upperCard.style);
   upperCard.style.backgroundImage = `url("${background}")`;
   upperCard.style.backgroundSize = "cover";
 }
