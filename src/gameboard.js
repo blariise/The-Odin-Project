@@ -2,6 +2,7 @@ export default class Gameboard {
   width;
   height;
   board;
+  #ships = new Array();
 
   constructor(width = 10, height = 10) {
     this.width = width;
@@ -32,6 +33,7 @@ export default class Gameboard {
         defualt:
           throw new Error("Bad direction");
       }
+      this.#ships.push(ship);
     }
   }
 
@@ -71,8 +73,10 @@ export default class Gameboard {
       if (cell.value) {
         cell.value = -1;
         cell.owner.hit();
-        console.log(cell.owner);
+        console.log(this.#doesGameEnd());
         return true;
+      } else {
+        cell.value = -2;
       }
     }
     return false;
@@ -84,11 +88,19 @@ export default class Gameboard {
     }
     return true;
   }
+
+  #doesGameEnd() {
+    for (const ship of this.#ships) {
+      if (!ship.sunk)
+        return false;
+    }
+    return true;
+  }
 }
 
 class Cell {
-  value;
-  owner; // Ship, if cell is without a ship then null
+  value;  // -2: missed attack, -1: hit, 0: clear, 1: ship
+  owner;  // Ship, if cell is without a ship then null
 
   constructor(value, owner) {
     this.value = value;

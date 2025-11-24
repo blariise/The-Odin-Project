@@ -7,15 +7,15 @@ describe("Ship class", () => {
     expect(ship.hits).toBe(3);
   });
   
-  test("isSunk()", () => {
+  test("sunk", () => {
     const ship = new Ship(5, 0);
     ship.hit();
-    expect(ship.isSunk()).toBeFalsy();
+    expect(ship.sunk).toBeFalsy();
     ship.hit();
     ship.hit();
-    expect(ship.isSunk()).toBeFalsy();
+    expect(ship.sunk).toBeFalsy();
     ship.hit();
     ship.hit();
-    expect(ship.isSunk()).toBeTruthy();
+    expect(ship.sunk).toBeTruthy();
   });
 });
