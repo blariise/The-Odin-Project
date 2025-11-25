@@ -4,13 +4,12 @@ export default class Gameboard {
   width;
   height;
   board;
-  #ships;
+  #ships = new Array();
 
   constructor(width = 10, height = 10) {
     this.width = width;
     this.height = height;
     this.board = this.#initBoard();
-    this.#ships = this.#generateShips();
   }
 
   #initBoard() {
@@ -36,6 +35,7 @@ export default class Gameboard {
         defualt:
           throw new Error("Bad direction");
       }
+      this.#ships.push({ship, x, y, direction});
     }
   }
 
@@ -72,13 +72,16 @@ export default class Gameboard {
   receiveAttack(x, y) {
     if (this.#checkCordinates()) {
       const cell = this.board[x][y];
-      if (cell.value) {
-        cell.value = -1;
-        cell.owner.hit();
-        console.log(this.#doesGameEnd());
-        return true;
-      } else {
-        cell.value = -2;
+      switch(cell.value) {
+        case 1:
+          cell.value = -1;
+          cell.owner.hit();
+          return true;
+        case 0:
+          cell.value = -2;
+          return true;
+        default:
+          return false;
       }
     }
     return false;
@@ -100,7 +103,7 @@ export default class Gameboard {
   }
 
   populateBoard() {
-    const ships = this.#ships;
+    const ships = this.#generateShips();
     this.addShip(ships.carrier,    2, 1, "horizontal");
     this.addShip(ships.battleship, 5, 3, "vertical");
     this.addShip(ships.cruiser,    1, 5, "horizontal");
@@ -115,6 +118,10 @@ export default class Gameboard {
     const submarine = new Ship(3);
     const destroyer = new Ship(2);
     return {carrier, battleship, cruiser, submarine, destroyer};
+  }
+
+  getShips() {
+    return this.#ships;
   }
 
 }

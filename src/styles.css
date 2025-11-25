@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: #669BBC;
+}
+
 .container {
   display: flex;
   align-items: center;
@@ -31,9 +35,24 @@
   height: 100%;
   width: 100%;
   border-spacing: 0;
-  border: 1px solid black;
+  table-layout: fixed;
+  border-collapse: collapse;
 }
 
 .board-row .cell {
+  background-color: #DAF7DC;
   border: 1px solid black;
 }
+
+.board-row .cell[data-status="ship"][data-status="show"] {
+  background-color: #29335C;
+}
+
+.board-row .cell[data-status="hit"] {
+  background-color: #E4572E;
+}
+
+.board-row .cell[data-status="miss"] {
+  background-color: #7A7977;
+}
+
