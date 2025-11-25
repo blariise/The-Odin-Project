@@ -12,93 +12,35 @@ export default class Gameboard {
     this.board = this.#initBoard();
   }
 
-  #initBoard() {
-    let board = new Array(this.height);
-    for (let x = 0; x < this.height; ++x) {
-      board[x] = new Array(this.width);
-      for (let y = 0; y < this.width; ++y) {
-        board[x][y] = new Cell(0, null);
-      }
-    }
-    return board;
-  }
-
   addShip(ship, x, y, direction) {
-    if (this.#checkCordinates()) {
-      switch(direction) {
-        case "vertical":
-          this.#addShipVertical(ship, x, y);
-          break;
-        case "horizontal":
-          this.#addShipHorizontal(ship, x, y);
-          break;
-        defualt:
-          throw new Error("Bad direction");
+    this.#checkCordinates(x, y);
+    let axis;
+    let endCell;
+    switch (direction) {
+      case "vertical":
+        axis = y;
+        endCell = axis + ship.length - 1;
+        this.#checkCordinates(x, endCell); // if cordinates are bad, throw error
+        break;
+      case "horizontal":
+        axis = x;
+        endCell = axis + ship.length - 1;
+        this.#checkCordinates(endCell, y); // if cordinates are bad, throw error
+        break;
+      default:
+        throw new Error("Bad direction");
+    }
+
+    for (let i = axis; i < endCell; ++i) {
+      const cell = (axis === "x") ? this.board[i][y] : this.board[x][i];
+      if (cell.value == "ship") {
+        const cords = (axis === "x") ? `(${i}, ${y})` : `(${x}, ${i})`;
+        throw new Error(`Ship already placed at ${cords}`);
       }
-      this.#ships.push({ship, x, y, direction});
+      cell.value = "ship"
+      cell.ship = ship;
     }
-  }
-
-  #addShipVertical(ship, x, y) {
-    const end_cell = ship.length + y - 1;
-    if (end_cell >= this.height) {
-      throw new Error("Ship out of bound");
-    }
-    for (let i = y; i <= end_cell; ++i) {
-      const cell = this.board[x][i];
-      if (cell.value == 1) {
-        throw new Error(`Ship already placed at (${x},${i})`);
-      }
-      cell.value = 1;
-      cell.owner = ship;
-    }
-  }
-
-  #addShipHorizontal(ship, x, y) {
-    const end_cell = ship.length + x - 1;
-    if (end_cell >= this.width) {
-      throw new Error("Ship out of bound");
-    }
-    for (let i = x; i <= end_cell; ++i) {
-      const cell = this.board[i][y];
-      if (cell.value == 1) {
-        throw new Error(`Ship already placed at (${i},${y})`);
-      }
-      cell.value = 1;
-      cell.owner = ship;
-    }
-  }
-
-  receiveAttack(x, y) {
-    if (this.#checkCordinates()) {
-      const cell = this.board[x][y];
-      switch(cell.value) {
-        case 1:
-          cell.value = -1;
-          cell.owner.hit();
-          return true;
-        case 0:
-          cell.value = -2;
-          return true;
-        default:
-          return false;
-      }
-    }
-    return false;
-  }
-
-  #checkCordinates(x, y) {
-    if ((x < 0 || x >= this.width) && (y < 0 || y >= this.height)) {
-      throw new Error("Cordinates are out of bound");
-    }
-    return true;
-  }
-
-  #doesGameEnd() {
-    for (const ship of this.#ships) {
-      if (!ship.sunk)
-        return false;
-    }
+    this.#ships.push({ship, x, y, direction});
     return true;
   }
 
@@ -111,6 +53,45 @@ export default class Gameboard {
     this.addShip(ships.destroyer,  3, 9, "horizontal");
   }
 
+  receiveAttack(x, y) {
+    const cell = this.board[x][y];
+    switch(cell.value) {
+      case "ship":
+        cell.value = "hit";
+        cell.owner.hit();
+        return true;
+      case "clear":
+        cell.value = "miss";
+        return true;
+      default:
+        return false;
+    }
+    return false;
+  }
+
+  didGameEnd() {
+    for (const ship of this.#ships) {
+      if (!ship.sunk)
+        return false;
+    }
+    return true;
+  }
+
+  getShips() {
+    return this.#ships;
+  }
+
+  #initBoard() {
+    let board = new Array(this.height);
+    for (let x = 0; x < this.height; ++x) {
+      board[x] = new Array(this.width);
+      for (let y = 0; y < this.width; ++y) {
+        board[x][y] = new Cell("clear", null);
+      }
+    }
+    return board;
+  }
+
   #generateShips() {
     const carrier = new Ship(5);
     const battleship = new Ship(4);
@@ -120,19 +101,21 @@ export default class Gameboard {
     return {carrier, battleship, cruiser, submarine, destroyer};
   }
 
-  getShips() {
-    return this.#ships;
+  #checkCordinates(x, y) {
+    if ((x < 0 || x >= this.width) && (y < 0 || y >= this.height)) {
+      throw new Error("Cordinates are out of bound");
+    }
+    return true;
   }
-
 }
 
 class Cell {
-  value;  // -2: missed attack, -1: hit, 0: clear, 1: ship
-  owner;  // Ship, if cell is without a ship then null
+  value;  // miss, hit, clear, ship
+  ship;  // Ship, if cell is without a ship then null
 
-  constructor(value, owner) {
+  constructor(value, ship) {
     this.value = value;
-    this.owner = owner;
+    this.ship = ship;
   }
 }
 
