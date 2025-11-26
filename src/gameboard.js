@@ -18,7 +18,6 @@ export default class Gameboard {
     }
     let start;
     let endCell;
-    let axis;
     switch (direction) {
       case "vertical":
         start = y; // [x][i]
@@ -47,8 +46,8 @@ export default class Gameboard {
     const positions = new Array();
     let position;
     for (let i = start; i <= endCell; ++i) {
-      const cell = (axis === "x") ? this.board[i][y] : this.board[x][i];
-      position = (axis === "x") ? [i, y] : [x, i];
+      const cell = (direction === "horizontal") ? this.board[i][y] : this.board[x][i];
+      position = (direction === "horizontal") ? [i, y] : [x, i];
       if (cell.value == "ship") {
         throw new Error(`Ship already placed at ${position}`);
       }
@@ -56,7 +55,7 @@ export default class Gameboard {
       cell.ship = ship;
       positions.push(position);
     }
-    const borderPositions = this.#getBorderPositions(positions);
+    const borderPositions = this.#getBorderPositions(positions, direction);
     this.#setBorderPositionsOnBoard(borderPositions);
     this.#ships.push({ship, positions, borderPositions, direction});
     return true;
@@ -69,8 +68,6 @@ export default class Gameboard {
     this.addShip(ships.cruiser,    1, 5, "horizontal");
     this.addShip(ships.submarine,  8, 6, "vertical");
     this.addShip(ships.destroyer,  3, 9, "horizontal");
-    console.log(this.#ships);
-    console.log(this.board);
   }
 
   receiveAttack(x, y) {
@@ -128,39 +125,74 @@ export default class Gameboard {
     return !((x < 0 || x >= this.width) || (y < 0 || y >= this.height));
   }
 
-  #getBorderPositions(shipPositions) {
+  #getBorderPositions(shipPositions, direction) {
     if (!shipPositions) {
       return false;
     }
-
     const outPositions = new Array();
-    for (let i = 0; i < shipPositions.length; ++i) {
-      const shipX = shipPositions[i][0];
-      const shipY = shipPositions[i][1];
-      if (i === 0 && this.#isPositionValid(shipX - 1, shipY)) {
-        outPositions.push([shipX-1, shipY]);
-      }
-      if (i === shipPositions.length - 1 && this.#isPositionValid(shipX + 1, shipY)) {
-        outPositions.push([shipX+1, shipY]);
-      }
-      
-      if (this.#isPositionValid(shipX, shipY - 1)) {
-        outPositions.push([shipX, shipY - 1]);
-      }
+    for (let j = 0; j < shipPositions.length; ++j) {
+      const x = shipPositions[j][0];
+      const y = shipPositions[j][1];
+      const left = x - 1;
+      const right = x + 1;
+      const down = y - 1;
+      const up = y + 1;
 
-      if (this.#isPositionValid(shipX, shipY + 1)) {
-        outPositions.push([shipX, shipY + 1]);
+      if (direction === "vertical") {
+        if (this.#isPositionValid(left, y)) {
+          outPositions.push([left, y]);
+        } else if (this.#isPositionValid(right, y)) {
+          outPositions.push([right, y]);
+        }
+      }
+      if (direction === "horizontal") {
+        if (this.#isPositionValid(x, down)) {
+          outPositions.push([x, down]);
+        } else if (this.#isPositionValid(x, up)) {
+          outPositions.push([x, up]);
+        }
       }
     }
+    const startX = shipPositions[0][0];
+    const startY = shipPositions[0][1];
+    const endX = shipPositions[shipPositions.length-1][0];
+    const endY = shipPositions[shipPositions.length-1][1];
+    const startPositions = this.#getBorderPositionsWithCorners(startX, startY, direction);
+    const endPositions = this.#getBorderPositionsWithCorners(endX, endY, direction);
+    outPositions.concat(startPositions).concat(endPositions);
     return outPositions;
   }
 
-  #setBorderPositionsOnBoard(positions) {
-    for (const pos of positions) {
-      const x = pos[0];
-      const y = pos[1];
-      const cell = this.board[x][y];
-      cell.value = "border";
+  #getBorderPositionsWithCorners(x, y, direction) {
+    const outPositions = new Array();
+    switch (direction) {
+      case "horizontal":
+        --x;
+        for (let i = y-1; i < y + 2; ++i) {
+          if(this.#isPositionValid(x, i)) {
+            outPositions.push([x, i])
+          }
+        }
+        return outPositions;
+      case "vertical":
+        ++y;
+        for (let i = x-1; i < x + 2; ++i) {
+          if(this.#isPositionValid(i, y)) {
+            outPositions.push([i, y]);
+          }
+        }
+        return outPositions;
+      default:
+        break;
+    }
+    return null;
+  }
+
+  #setBorderPositionsOnBoard(borderPositions) {
+    for (let pos of borderPositions) {
+      let x = pos[0];
+      let y = pos[1];
+      this.board[x][y].value = "border";
     }
   }
 }

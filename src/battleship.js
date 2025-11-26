@@ -14,7 +14,6 @@ export default class Battleship {
 
   playerTurn(x, y) {
     const secondPlayer = this.#getSecondPlayer();
-
     const hitOrMiss = secondPlayer.gameboard.receiveAttack(x, y);
 
     switch (hitOrMiss) {

@@ -24,10 +24,8 @@ describe("Gameboard class", () => {
     expect(gameboard.board[3][6].value).toBe("ship");
     expect(gameboard.board[4][6].value).toBe("ship");
     expect(gameboard.board[5][6].value).toBe("ship");
-    
-    expect(() => {
-      gameboard.addShip(battleship, 7, 8, "horizontal");
-    }).toThrow("Cordinates are out of bound");
+
+    expect(gameboard.addShip(battleship, 7, 8, "horizontal")).toBeFalsy();
 
     expect(() => {
       gameboard.addShip(battleship, 0, 2, "horizontal");
@@ -39,9 +37,9 @@ describe("Gameboard class", () => {
     const carrier = new Ship(5);
     gameboard.addShip(carrier, 0, 0, "vertical");
     expect(gameboard.receiveAttack(0, 0)).toBeTruthy();
-    expect(gameboard.receiveAttack(1, 0)).toBeTruthy();
+    expect(gameboard.receiveAttack(1, 0)).toBeNull();
     expect(gameboard.board[0][0].value).toBe("hit");
-    expect(gameboard.board[1][0].value).toBe("miss");
+    expect(gameboard.board[1][0].value).toBe("border");
   });
 });
 
