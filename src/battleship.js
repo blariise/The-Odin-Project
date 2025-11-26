@@ -1,29 +1,54 @@
 import Player from "./player.js";
 
 export default class Battleship {
-  players;
-  activePlayer;
+  players = new Array(2);
   isGameOver;
+  playerToHit;
 
-  constructor() {
-    this.players.push(new Player());
-    this.players.push(new Player());
-    this.activePlayer = this.players[0];
+  constructor(playAgainstBot = true) {
+    this.players[0] = new Player("human");
+    this.players[1] = playAgainstBot ? new Player("bot") : new Player("human");
     this.isGameOver = false;
+    this.playerToHit = this.players[0];
   }
 
-  cycle(x, y) {
-    const players = this.players;
-    const secondPlayer = (activePlayer === players[0]) ? players[1] : players[0];
+  playerTurn(x, y) {
+    const secondPlayer = this.#getSecondPlayer();
 
-    if (!enemyPlayer.gameboard.receiveAttack(x, y)) {
-      return;
+    const hitOrMiss = secondPlayer.gameboard.receiveAttack(x, y);
+
+    switch (hitOrMiss) {
+      case "miss":
+        this.playerToHit = secondPlayer;
+        return;
+      case "hit":
+        if (secondPlayer.gameboard.isGameOver()) {
+          this.isGameOver = true;
+          console.log(`Game over ${activePlayer} won!`); // to remove
+          return;
+        }
+        break;
+      default:
+        return;
     }
-    if (enemyPlayer.gameboard.isGameOver()) {
-      this.isGameOver = true;
-      console.log(`Game over ${activePlayer} won!`);
-      return; 
-    }
-    activePlayer = secondPlayer;
   }
+
+  botTurn() {
+    const x = getRandomInt(10);
+    const y = getRandomInt(10);
+    const humanPlayer = players[0];
+    if (!humanPlayer.gameboard.receiveAttack(x, y)) {
+      return false;
+    }
+    if (humanPlayer.gameboard.isGameBoard()) {
+      this.isGameOver();
+      console.log(`Game over bot won!`);
+    }
+    activePlayer = player;
+    return true;
+  }
+
+  #getSecondPlayer() {
+    return this.playerToHit === this.players[0] ? this.players[1] : this.players[0];
+  };
 }
