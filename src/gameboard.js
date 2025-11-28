@@ -20,7 +20,7 @@ export default class Gameboard {
     let endCell;
     switch (direction) {
       case "vertical":
-        start = y; // [x][i]
+        start = y; // [x][i:]
         endCell = start + ship.length - 1;
         if (!this.#isPositionValid(x, endCell)) {
           return false;
@@ -54,7 +54,7 @@ export default class Gameboard {
       positions.push(position);
     }
     const borderPositions = this.#getBorderPositions(positions, direction);
-    this.#setPositionsValueOnBoard(borderPositions, "border");
+    //this.#setPositionsValueOnBoard(borderPositions, "border");
     this.#ships.push({ship, positions, borderPositions, direction});
     return true;
   }
@@ -71,17 +71,22 @@ export default class Gameboard {
   receiveAttack(x, y) {
     const cell = this.board[x][y];
     switch(cell.value) {
-      case "ship":
+      case "ship": {
         cell.value = "hit";
         cell.ship.hit();
         if (cell.ship.sunk) {
-          const ship = getShip(cell.ship);
+          const ship = this.#getShip(cell.ship);
           this.#setPositionsValueOnBoard(ship.borderPositions, "miss");
         }
-        return cell.value;
-      case "clear":
+        if (this.isGameOver()) {
+          return "game-over";
+        }
+        return "hit";
+      }
+      case "clear": {
         cell.value = "miss";
-        return cell.value;
+        return "miss";
+      }
       default:
         return null;
     }
@@ -102,7 +107,7 @@ export default class Gameboard {
 
   #getShip(cellShip) {
     for (const ship of this.#ships) {
-      if (cellShip === ship) {
+      if (cellShip === ship.ship) {
         return ship;
       }
     }
@@ -204,7 +209,6 @@ export default class Gameboard {
             y = endY + 1;
           }
           for (let i = x-1; i < x + 2; ++i) {
-            console.log(i, y);
             if(this.#isPositionValid(i, y)) {
               outPositions.push([i, y]);
             }

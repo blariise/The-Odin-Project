@@ -1,53 +1,48 @@
 import "./styles.css";
 import Battleship from "./battleship.js";
 
-const battleship = new Battleship();
+const battleship = new Battleship(true);
+const player1 = battleship.players[0];
+const player2 = battleship.players[1];
 const player1BoardDiv = document.querySelector(".player1.board");
 const player2BoardDiv = document.querySelector(".player2.board");
+let playerToHit = player1;
 
 initGame();
-
 
 function initGame() {
   const boardsDiv = document.querySelector(".boards");
   boardsDiv.addEventListener("click", (e) => {
     if (e.target.className == "cell") {
-      const playerBoardClickSource = e.target.parentElement.parentElement.parentElement.classList[0];
+      const playerName = e.target.parentElement.parentElement.parentElement.classList[0];
       const x = e.target.dataset.x;
       const y = e.target.dataset.y;
-      gameCycle(playerBoardClickSource, x, y);
+      gameCycle(playerName, x, y);
     }
   });
-  
   renderBoard(player1, player1BoardDiv);
   renderBoard(player2, player2BoardDiv);
-  setCellStatusOnBoard(player1, player1BoardDiv);
+  updateCellStatusOnBoard(player1, player1BoardDiv);
+  updateCellStatusOnBoard(player2, player2BoardDiv);
 }
 
-function gameCycle(playerBoardClickSource, x, y) {
-  if (activePlayer == player1 && playerBoardClickSource == "player2") {
-    playerTurn(x, y);
-  } else if (activePlayer == player2 && playerBoardClickSource == "player1"){
-    computerTurn(x, y);
-  }
-}
-
-function playerTurn(x, y) {
-  const board = player2.gameboard;
-  if (!board.receiveAttack(x, y)) {
+function gameCycle(playerName, x, y) {
+  const attackedPlayer = getPlayerByName(playerName);
+  if (attackedPlayer === playerToHit) {
     return;
   }
-  setCellStatusOnBoard(player2, player2BoardDiv);
-  activePlayer = player2;
-}
-
-function computerTurn(x, y) {
-  const board = player1.gameboard;
-  if (!board.receiveAttack(x, y)) {
-    return;
+  switch (attackedPlayer.gameboard.receiveAttack(x, y)) {
+    case "miss":
+      console.log(playerToHit);
+      changePlayerToHit();
+      console.log(playerToHit);
+    case "hit":
+      updateCellStatusOnBoard(attackedPlayer, getPlayerBoardDiv(playerName));
+      break;
+    default:
+      return;
   }
-  setCellStatusOnBoard(player1, player1BoardDiv);
-  activePlayer = player1;
+  updateCellStatusOnBoard(attackedPlayer, getPlayerBoardDiv(playerName));
 }
 
 function renderBoard(player, playerBoardDiv) {
@@ -55,7 +50,7 @@ function renderBoard(player, playerBoardDiv) {
   playerBoardDiv.appendChild(boardTable);
 }
 
-function setCellStatusOnBoard(player, playerBoardDiv) {
+function updateCellStatusOnBoard(player, playerBoardDiv) {
   const rowNodes = playerBoardDiv.childNodes[0].childNodes;
   const playerBoard = player.gameboard.board;
   let x = 0;
@@ -65,17 +60,22 @@ function setCellStatusOnBoard(player, playerBoardDiv) {
       const cellNodes = rowNodes[y].childNodes;
       const cellDOM = cellNodes[x];
       switch(cell.value) {
-        case 1:
+        case "ship":
           cellDOM.dataset.status = "ship";
           break;
-        case 0:
+        case "clear":
           cellDOM.dataset.status = "clear";
           break;
-        case -1:
+        case "hit":
           cellDOM.dataset.status = "hit";
           break;
-        case -2:
+        case "miss":
           cellDOM.dataset.status = "miss";
+          break;
+        case "border":
+          cellDOM.dataset.status = "border";
+          break;
+        default:
           break;
       }
       ++y;
@@ -102,3 +102,14 @@ function createBoardDOM() {
   return table;
 }
 
+function changePlayerToHit() {
+  playerToHit = playerToHit === player1 ? player2 : player1;
+}
+
+function getPlayerByName(playerName) {
+  return playerName === "player1" ? player1 : player2;
+}
+
+function getPlayerBoardDiv(playerName) {
+  return playerName === "player1" ? player1BoardDiv : player2BoardDiv;
+}

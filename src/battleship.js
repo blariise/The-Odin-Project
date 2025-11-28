@@ -18,6 +18,7 @@ export default class Battleship {
 
     switch (hitOrMiss) {
       case "miss":
+        console.log("miss");
         this.playerToHit = secondPlayer;
         return;
       case "hit":

@@ -44,8 +44,12 @@ body {
   border: 1px solid black;
 }
 
-.board-row .cell[data-status="ship"][data-status="show"] {
+.board-row .cell[data-status="ship"] {
   background-color: #29335C;
+}
+
+.board-row .cell[data-status="border"] {
+  background-color: grey;
 }
 
 .board-row .cell[data-status="hit"] {
