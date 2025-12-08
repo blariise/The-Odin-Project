@@ -1,0 +1,49 @@
+.options {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 50px;
+  overflow: auto;
+  gap: 50px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #EEF0F2;
+  border-radius: 10px;
+}
+
+.card .title {
+  align-self: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inputs label {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  align-items: baseline;
+}
+
+@media (max-width: 1090px) {
+  .inputs label {
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    text-align: center;
+  }
+}
+
+@media (max-width: 800px) {
+  .options {
+    padding: 0;
+  }
+}
