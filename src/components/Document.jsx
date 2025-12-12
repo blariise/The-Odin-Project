@@ -1,16 +1,17 @@
 import "../styles/Document.css";
 
-export default function Document() {
+export default function Document({data}) {
   return (
     <div className={"document"}>
-      <Preview/>
+      <Resume data={data}/>
     </div>
   );
 }
 
-function Preview() {
+function Resume({data}) {
   return (
-    <div className={"preview"}>
+    <div className={"resume"}>
     </div>
   );
 }
+

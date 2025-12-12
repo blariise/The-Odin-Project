@@ -1,9 +1,15 @@
-const general = [
+const generalInputs = [
+  {
+    id: 0,
+    name: "firstName",
+    type: "text",
+    label: "First Name"
+  },
   {
     id: 1,
-    name: "name",
+    name: "lastName",
     type: "text",
-    label: "Full Name"
+    label: "Last Name"
   },
   {
     id: 2,
@@ -19,10 +25,10 @@ const general = [
   }
 ];
 
-const education = [
+const educationInputs = [
   {
     id: 0,
-    name: "school-name",
+    name: "school",
     type: "text",
     label: "School"
   },
@@ -34,25 +40,25 @@ const education = [
   },
   {
     id: 2,
-    name: "school-date-from",
-    type: "date",
+    name: "schoolStartDate",
+    type: "month",
     label: "Start Date"
   },
   {
     id: 3,
-    name: "school-date-until",
-    type: "date",
+    name: "schoolEndDate",
+    type: "month",
     label: "End Date"
   },
   {
     id: 4,
-    name: "school-custom",
+    name: "schoolCustom",
     type: "text",
     label: "Custom"
   },
 ];
 
-const experience = [
+const experienceInputs = [
   {
     id: 0,
     name: "company",
@@ -67,22 +73,30 @@ const experience = [
   },
   {
     id: 2,
-    name: "date-from",
-    type: "date",
+    name: "workStartDate",
+    type: "month",
     label: "Start Date"
   },
   {
     id: 3,
-    name: "date-until",
-    type: "date",
+    name: "workEndDate",
+    type: "month",
     label: "End Date"
   },
   {
     id: 4,
-    name: "work-custom",
+    name: "workCustom",
     type: "text",
     label: "Custom"
   },
 ];
 
-export {general, education, experience};
+const defaultData = {
+  fullName: "",
+  email: "",
+  phone: "",
+  schools: [],
+  jobs: [],
+}
+
+export {generalInputs, educationInputs, experienceInputs, defaultData};
