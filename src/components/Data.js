@@ -1,9 +1,9 @@
 const apiUrl = "https://api.jikan.moe/v4/";
 
 //https://myanimelist.net/anime/1735/Naruto__Shippuuden/characters
-const chsId = [13, 17, 85, 145, 14, 2007, 1662, 1555, 2535, 2792, 3179, 2767, 20013];
+const chsId = [13, 17, 85, 145, 14, 2007, 1662, 1555, 2535, 2792, 3179, 4773];
 
-export default async function fetchCharacters(animeId = 1735, charactersId = chsId) {
+export async function fetchCharacters(animeId = 1735, charactersId = chsId) {
   const charactersUrl = `${apiUrl}anime/${animeId}/characters`;
   const response = await fetch(charactersUrl);
   if (!response.ok) {
