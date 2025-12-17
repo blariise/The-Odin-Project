@@ -1,0 +1,40 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+
+  --carbon-black: #1C1C1C;
+  --alabaster-grey: #DADDD8;
+  --soft-linen: #ECEBE4;
+  --platinum: #EEF0F2;
+  --ghost-white: #FAFAFF;
+
+  background-color: var(--alabaster-grey);
+  color: rgba(255, 255, 255, 0.87);
+  color: var(--carbon-black);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
