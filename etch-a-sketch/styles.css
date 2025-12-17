@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #141421;
+}
+
+.btn {
+  padding: 10px 30px;
+  margin: 20px;
+}
+
+.container {
+  background-color: #FFFFFF;
+  border: 1px solid black;
+  width: 640px;
+  height: 640px;
+  display:flex;
+  flex-wrap: wrap;
+  flex: 0 1 auto;
+}
+
+.square {
+  flex:0 0 auto;
+  opacity: 0.0;
+}
+
