@@ -1,0 +1,90 @@
+@font-face {
+  font-family: "TexGyreHeros";
+  src: url("./texgyreheros.gyreheros-bold.otf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "TexGyreHeros";
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 3rem 1fr;
+
+  color: #FFFFFF;
+}
+
+header {
+  display: grid;
+  grid-template-columns: 1fr minmax(20px, 20%) 1fr;
+  background-color: #232536;
+}
+
+nav {
+  grid-area: 1 / 2 / 2 / 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+nav button {
+  background-color: #232536;
+  border: 4px solid #232536;
+  font-size: 1.2rem;
+  color: #FFFFFF;
+}
+
+nav button:hover {
+  background-color: #655ACC;
+  border: 4px solid #655ACC;
+}
+
+nav button:active,
+.active,
+.active:hover {
+  border-bottom: 4px solid #FFFFFF;
+}
+
+#content {
+  display: grid;
+
+  background-image: url("./pizza.jpeg");
+  background-size: cover;
+  justify-content: center;
+}
+
+#content h1 {
+  justify-self: center;
+  align-self: center;
+  font-weight: bold;
+}
+
+.menu-container {
+  margin-top: 10px;
+  display: grid;
+  gap: 20px;
+  height: fit-content;
+  border: 1px solid #FFFFFF;
+  width: 400px;
+  padding: 20px;
+  background-color: #232536C8;
+}
+
+.menu-dish {
+  display: grid;
+  grid-template-columns: fit-content(10px) 1fr fit-content(10px);
+  grid-template-rows: fit-content(1rem) fit-content(0.8rem);
+}
+
+.menu-ingredients {
+  grid-area: 2 / 1 / 3 / 4;
+  font-size: 0.8rem;
+}
+
+.about-container {
+  margin-top: 10px;
+}
