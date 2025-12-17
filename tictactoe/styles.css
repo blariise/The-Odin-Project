@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #232830;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr minmax(200px, 500px) 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100vh;
+}
+
+.game-container {
+  margin-top: 20px;
+  max-width: 550px;
+  grid-area: 1 / 2 / 2 / 3;
+  display: grid;
+  grid-template-rows: 2rem 2rem 1fr 2rem;
+  gap: 20px;
+}
+
+.inputs {
+  display: grid;
+  justify-items: center;
+}
+
+.buttons button {
+  padding: 4px;
+  background-color: #232830;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.buttons button:hover {
+  background-color: #556073; 
+}
+
+.dialog-set-name {
+  justify-self: center;
+  top: 5vh;
+
+  min-width: 200px;
+  padding: 20px;
+
+  border-radius: 10px;
+}
+
+.dialog-set-name form {
+  display: grid;
+  grid-template-rows: 1fr 2rem;
+  gap: 10px;
+}
+
+.dialog-set-name form .inputs {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+}
+
+.dialog-set-name form .buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.scores {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.player {
+  display: grid;
+  justify-items: center;
+}
+
+.board-grid {
+  min-height: 200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.cell {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  border: 1px solid white;
+}
+
+.cell.top {
+  border-top: 0;
+}
+
+.cell.left {
+  border-left: 0;
+}
+
+.cell.right {
+  border-right: 0;
+}
+
+.cell.bottom {
+  border-bottom: 0;
+}
+
+.mark {
+  color: #FFFFFF;
+  font-size: 4rem;
+}
+
+.game-result {
+  display: grid;
+  justify-items: center;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: bold;
+}
