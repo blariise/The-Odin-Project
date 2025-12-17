@@ -1,0 +1,95 @@
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #669BBC;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.game-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.boards {
+  display: flex;
+  gap: 2rem;
+}
+
+.board {
+  width: 300px;
+  height: 300px;
+}
+
+.board table {
+  height: 100%;
+  width: 100%;
+  border-spacing: 0;
+  table-layout: fixed;
+  border-collapse: collapse;
+  cursor: crosshair;
+}
+
+.board-row .cell {
+  background-color: #DAF7DC;
+  border: 1px solid black;
+}
+
+.board-row .cell:hover {
+  background-color: #D0D9D2;
+}
+
+.board-row .cell[data-status="hit"] {
+  background-color: #E4572E;
+}
+
+.board-row .cell[data-status="miss"] {
+  background-color: #7A7977;
+}
+
+.board.show {
+  .cell[data-status="ship"] {
+    background-color: #29335C;
+  }
+}
+
+.board.hide {
+  .cell {
+    background-color: black;
+  }
+}
+
+.game-over-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.reload-board {
+  width: 3rem;
+  height: 3rem;
+  background-color: #123;
+  border: none;
+  color: white;
+}
+
+.reload-board:hover {
+  cursor: pointer;
+}
