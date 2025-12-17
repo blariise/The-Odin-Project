@@ -1,0 +1,27 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Verdana", "sans-serif";
+}
+
+body {
+  background-color: #212024;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+h1 {
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.recipes-list img {
+  height: 40px;
+  width: auto;
+}
+
+.recipes-list li {
+  font-size: 50px;
+}
+
