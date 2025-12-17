@@ -1,0 +1,229 @@
+@font-face {
+  font-family: "TexGyreHeros";
+  src: url("./texgyreheros-bold.otf");
+}
+
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  --text-color: #DDDDDD;
+  --red: #F05454;
+  --main-darker: #110E1B;
+  --main-dark: #191528;
+  --task-info: #3C162F;
+  --priority-low: #ADAAAA;
+  --priority-medium: #BF8A0F;
+  --priority-high: #A3081A;
+  --status-not-completed: var(--priority-low);
+  --status-completed: #13F235;
+}
+
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: max-content
+                         minmax(250px, 500px)
+                         minmax(250px, 500px);
+  color: var(--text-color);
+  background-color: var(--main-darker);
+
+  font-family: "TexGyreHeros";
+}
+
+.projects,
+.tasks,
+.task-info {
+  padding: 20px;
+}
+
+.projects {
+  display: grid;
+  grid-template-rows: max-content 1fr;
+  gap: 20px;
+
+  background-color: var(--main-dark);
+}
+
+.add-project {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 6px;
+  color: var(--red);
+}
+
+.add-icon {
+  display: grid;
+  align-items: center;
+}
+
+.add-icon svg {
+  height: 2rem;
+  fill: var(--red);
+}
+
+.add-input {
+  display: grid;
+}
+
+.add-input input {
+  font-size: 1.5rem;
+  background-color: var(--main-dark);
+  border: 0;
+  color: var(--text-color);
+}
+
+.add-input input:focus-visible {
+  outline: none;
+}
+
+.add-input input::placeholder {
+  color: var(--red);
+}
+
+.project {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  justify-items: start;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.project:hover {
+  background-color: var(--main-darker);
+  cursor: pointer;
+}
+
+.project-remove svg {
+  fill: #FFFFFF;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.project-remove svg:hover {
+  fill: var(--red);
+}
+
+.tasks {
+  display: grid;
+  min-width: 250px;
+  grid-template-rows: max-content max-content 1fr;
+  gap: 29px;
+  background-color: var(--main-darker);
+}
+
+.tasks .project-title {
+  justify-self: center;
+  font-size: 1.2rem;
+}
+
+.add-task {
+  max-width: 2rem;
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, max-content);
+  gap: 2px;
+}
+
+.add-task .add-icon svg {
+  height: 1.4rem;
+}
+
+.task-add-input input {
+  font-size: 1rem;
+  background-color: var(--main-darker);
+  border: 0;
+  color: var(--text-color);
+}
+
+.task-add-input input:focus-visible {
+  outline: none;
+}
+
+.task-add-input input::placeholder {
+  color: var(--red);
+}
+
+.tasks-container {
+  display: grid;
+  grid-auto-rows: 1.5rem;
+  gap: 6px;
+}
+
+.task {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: max-content 1fr max-content;
+}
+
+.task:hover {
+  background-color: var(--main-dark);
+  cursor: pointer;
+}
+
+.task.completed {
+  text-decoration: line-through;
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 2px;
+}
+
+.task-remove {
+  display: grid;
+  align-items: center;
+}
+
+.task-remove svg {
+  fill: #FFFFFF;
+  height: 70%;
+  border-radius: 10px;
+}
+
+.task-remove svg:hover {
+  fill: var(--red);
+}
+
+.task-info {
+  display: grid;
+  grid-template-rows: max-content max-content 1fr;
+  gap: 29px;
+  background-color: var(--main-darker);
+}
+
+.task-info-title {
+  justify-self: center;
+  font-size: 1.2rem;
+}
+
+.task-info-status-data {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+}
+
+.task-info-description textarea {
+  resize: none;
+  background-color: var(--main-darker);
+  color: var(--text-color);
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  font-family: "TexGyreHeros";
+}
+
+.task-info-completion-status:hover,
+.task-info-priority:hover,
+.task-info-date:hover {
+  cursor: pointer;
+}
+
+#task-date {
+  background-color: var(--main-darker);
+  border: none;
+  color: var(--text-color);
+  color-scheme: dark;
+}
+
