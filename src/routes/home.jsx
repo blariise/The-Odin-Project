@@ -1,7 +1,10 @@
+import { Link } from "react-router";
+
 export default function Home() {
   return (
     <>
-    {"Home"}
+    <h1>{"Home"}</h1>
+    <Link to={"/shop"}>{"Shop"}</Link>
     </>
   );
 }
