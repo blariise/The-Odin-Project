@@ -27,7 +27,6 @@ export default function Shop() {
 
   return (
     <>
-    {"Shop"}
     {
       loading 
         ? <h1>Loading...</h1>
@@ -39,13 +38,14 @@ export default function Shop() {
 
 function CardsContainer({products}) {
   return (
-    <ol>
+    <>
     {
       products.map((product) => {
-        return (<li key={product.id}>{product.title}</li>)
+        return <Card key={product.id} product={product}/>
       })
     }
-    </ol>
+    </>
   );
 }
+
 
