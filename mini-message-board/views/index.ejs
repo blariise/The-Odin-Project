@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <h1>Home</h1>
+    <a href="/new">Add new</a>
+    <% messages.forEach((mess) => { %>
+    <div class="message">
+    <a href="/post/<%= mess.id %>">Open</a> 
+      <div class="author">
+        <%= mess.user %>
+      </div>
+      <div class="message">
+        <%= mess.text %>
+      </div>
+      <div class="date">
+        <%= mess.added %>
+      </div>
+    </div>
+    <% }); %>
+  </body>
+</html>
